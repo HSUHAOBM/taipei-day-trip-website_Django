@@ -1,10 +1,19 @@
 from django.db import models
+from member.models import Member
+from trip_data.models import Trip_data
 
 # Create your models here.
-class order(models.Model):
-
-    user_id = models.IntegerField()
-    trip_id = models.IntegerField()
+class Order(models.Model):
+    user_id = models.OneToOneField(
+        Member,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    trip_id = models.OneToOneField(
+        Trip_data,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
     trip_date = models.DateTimeField()
     trip_time = models.TextField()
     trip_cost = models.IntegerField()

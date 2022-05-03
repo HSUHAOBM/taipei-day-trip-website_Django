@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class trip_data(models.Model):
+class Trip_data(models.Model):
     stitle = models.TextField()
     category = models.TextField(blank=True)
     description = models.TextField(blank=True)
@@ -10,7 +10,7 @@ class trip_data(models.Model):
     mrt = models.TextField(blank=True)
     latitude = models.TextField(blank=True)
     longitude = models.TextField(blank=True)
-    stitle = models.TextField(blank=True)
+    images = models.TextField(blank=True)
     last_modify_date = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
