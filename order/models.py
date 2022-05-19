@@ -7,12 +7,10 @@ class Order(models.Model):
     user_id = models.OneToOneField(
         Member,
         on_delete=models.CASCADE,
-        primary_key=True,
     )
     trip_id = models.OneToOneField(
         Trip_data,
         on_delete=models.CASCADE,
-        primary_key=True,
     )
     trip_date = models.DateTimeField()
     trip_time = models.TextField()
