@@ -7,10 +7,6 @@ from django.core.wsgi import get_wsgi_application
 import sys
 
 def main():
-    updata = []
-
-    parent_dir = os.path.dirname(os.path.abspath(__file__))
-    print(parent_dir)
 
     with open("data/taipei-attractions.json", "r", encoding="utf-8") as json_data:
         data = json.load(json_data)
@@ -25,6 +21,8 @@ def main():
         imglist_png = imgre2.findall(a)
         #     print("imglist2_png:",imglist_png)
         return imglist_jgp + imglist_png
+
+    print('資料數：',len(data["result"]["results"]))
 
     for i in range(len(data["result"]["results"])):
         models.Trip_data.objects.create(
@@ -45,11 +43,12 @@ def main():
             ),
         )
 
-
-
 if __name__ == "__main__":
-    sys.path.append("/home/sl/test/learn/Django/taipei_trip/")
 
+    parent_dir = os.path.abspath(os.path.dirname(os.getcwd()))
+    # print(parent_dir) #上層路徑
+
+    sys.path.append(parent_dir)
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "taipei_trip.settings")
     application = get_wsgi_application()
 
