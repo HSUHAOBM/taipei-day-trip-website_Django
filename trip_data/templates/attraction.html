@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
-
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/css/attraction_style.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="/css/userbox.css" rel="stylesheet" type="text/css" media="all" />
 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/attraction_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/userbox.css' %}">
 
     <title>Attraction</title>
 </head>
@@ -29,14 +29,13 @@
         </div>
         <div class="welcome">
             <div class="inforleft">
-                <img id="loadgif" src="/gif/ajax-loader.gif" />
+                <img id="loadgif" class="searchimg" src="{% static '/gif/ajax-loader.gif' %}" />
 
                 <div id="list" style="left:-540px;"></div>
 
-
                 <div class="btndiv">
-                    <div id="prev" class="btnleft" onclick="prev()"><img src="/img/btn.png" /></div>
-                    <div id="next" class="btnright" onclick="next()"><img src="/img/btn.png" /></div>
+                    <div id="prev" class="btnleft" onclick="prev()"><img class="searchimg" src="{% static '/img/btn.png' %}" /></div>
+                    <div id="next" class="btnright" onclick="next()"><img class="searchimg" src="{% static '/img/btn.png' %}" /></div>
                 </div>
                 <div id="buttons">
                 </div>
@@ -80,7 +79,7 @@
     </div>
     <div class="userbox">
         <div class="userboxtop"></div>
-        <div class="closebtn" onclick="userboxhide()"><img src="/img/closebtn.png" /></div>
+        <div class="closebtn" onclick="userboxhide()"><img src="{% static 'img/closebtn.png' %}" /></div>
 
         <a class="texttop">登入會員帳號</a>
         <form action="" method="post" id="signup">
@@ -95,8 +94,9 @@
         <a class="textend " onClick=useronclick();>還沒有帳戶？點此註冊</a>
     </div>
     </div>
-    <script src="/js/attractionscript.js "></script>
-    <script src="/js/memberuser.js "></script>
+
+    <script src="{% static '/js/memberuser.js' %}"></script>
+    <script src="{% static 'js/attractionscript.js' %}"></script>
 
 </body>
 

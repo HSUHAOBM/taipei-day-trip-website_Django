@@ -13,33 +13,34 @@ let timer;
 let imgend = false;
 
 function loadapi() {
-    // let src = "http://3.18.249.2:3000/api/attraction/"+Number(1)
-    // let src = "http://3.18.249.2:3000/api/attraction/" + Number(url)
     let src = "/api/attraction/" + Number(url)
 
-    fetch(src).then(function(response) {
+    fetch(src, {
+        method: "GET",
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+        }
+        }).then(function(response) {
         return response.json();
     }).then(function(result) {
         data = result.data;
-        // console.log(data)
-
+        if(data){
         //圖片數量
         imhlength = (data.images.split('http://').length) - 1
         addbody();
-
         timestart();
         document.getElementById("loadgif").style.display = "none";
-
-
+        }else{
+            console.log('bug')
+            location.href = '/'
+        }
     });
 }
 
 function addbody() {
-
-
     console.log("圖片數量", imhlength)
     webimgcount = imhlength + 2
-        // console.log(webimgcount)
+    // console.log(webimgcount)
 
     //設定List寬度
     list.style.width = 540 * (webimgcount) + 'px';
@@ -107,20 +108,14 @@ function addbody() {
 
     let information5 = document.querySelector('.information5');
     information5.textContent = data.transport
-
-
-
 }
 
 //場次選擇費用
 function displayResult(text) {
     document.querySelector('.rightend5div').textContent = text;
 }
-
 // 自動撥放--------------------------------------
-
 function timestart() {
-
     timer = setInterval(function() {
         play();
     }, 2800)
@@ -130,7 +125,6 @@ function play() {
     if (imgend) { prev(); } else {
         next();
     }
-
 }
 
 function stop() {
@@ -143,9 +137,7 @@ list.onmouseout = timestart;
 window.onload = function() {
     loadapi();
     setinputdate();
-
 }
-
 
 function prev() {
     index -= 1;
@@ -153,13 +145,10 @@ function prev() {
         index = imhlength;
     }
     buttonsShow();
-
     animate(540);
-
 }
 
 function next() {
-
     index += 1;
     if (index > imhlength) {
         index = 1;
@@ -167,9 +156,6 @@ function next() {
     buttonsShow();
     animate(-540);
 }
-
-
-
 
 function animate(offset) {
     let newLeft = parseInt(list.style.left) + offset;
@@ -220,8 +206,6 @@ orderform.addEventListener('submit', function(event) {
     var orderformdata = new FormData(orderform);
     let formdata = {};
     event.preventDefault();
-
-
     if (orderformdata.get("time") == "morning") {
         formdata = {
             "attractionId": url,
@@ -257,11 +241,8 @@ orderform.addEventListener('submit', function(event) {
         if (result.ok) {
             gobooking()
         }
-
     })
-
 })
-
 
 function setinputdate() {
     let nowdate = new Date();
@@ -272,6 +253,4 @@ function setinputdate() {
 
     const date = document.getElementById('date');
     date.setAttribute("value", today);
-
-    // console.log(today)
 }
