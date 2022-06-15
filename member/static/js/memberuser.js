@@ -6,7 +6,6 @@ let urlapi = "/api/user";
 
 //切換登入；註冊
 function useronclick() {
-
     if (textcontrol) {
         document.querySelector('.inputtextname').hidden = false;
         document.querySelector('.texttop').textContent = "註冊會員帳號";
@@ -16,7 +15,6 @@ function useronclick() {
         username = "";
         useremail = "";
         userpassword = "";
-
     } else {
         document.querySelector('.inputtextname').hidden = true;
         document.querySelector('.texttop').textContent = "登入會員帳號";
@@ -26,11 +24,8 @@ function useronclick() {
         document.querySelector('.textpoint').textContent = ""; //提示狀態
         useremail = "";
         userpassword = "";
-
-
     }
     textcontrol = !textcontrol
-        // console.log(textcontrol);
 }
 //登入介面隱藏
 function userboxhide() {
@@ -40,21 +35,16 @@ function userboxhide() {
 }
 //登入介面顯示
 function userboxshow() {
-
     document.querySelector('.inputtextname').value = "";
     // document.querySelector('.inputtextemail').value = "";
     // document.querySelector('.inputtextpassword').value = "";
     document.querySelector('.textpoint').textContent = "";
     document.querySelector('.userbox').style.display = "flex";
-
     //灰層
     let hidebg = document.getElementById("hidebg");
     hidebg.style.display = "block";
     hidebg.style.height = document.body.clientHeight + "px";
 }
-
-
-
 
 let form = document.getElementById('signup');
 let username = document.querySelector('.inputtextname').value;
@@ -72,7 +62,6 @@ form.addEventListener('submit', function(event) {
     userpassword = document.querySelector('.inputtextpassword').value;
 
     if (username != "") {
-
         // console.log("註冊")
         data = {
             "name": username,
@@ -119,10 +108,6 @@ form.addEventListener('submit', function(event) {
                 userboxhide();
             }
         });
-
-
-
-
 });
 
 function gobooking() {
@@ -133,14 +118,14 @@ function goindex() {
     location.href = '/'
 }
 
-//成功 登入 
+//成功 登入
 function logoin() {
     bookingbtn.onclick = gobooking;
     logbtn.onclick = logout;
     logbtn.textContent = "登出";
 }
 
-//成功 登出 
+//成功 登出
 function logout() {
     bookingbtn.onclick = userboxshow;
 
@@ -181,7 +166,6 @@ function checklogstate() {
         if (document.querySelector('.maincenterinput2>input')) {
             document.querySelector('.maincenterinput2>input').value = result.data.email;
         }
-
     })
 }
 checklogstate();
