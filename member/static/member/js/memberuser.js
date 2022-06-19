@@ -2,7 +2,7 @@ let textcontrol = true;
 let logbtn = document.querySelector('.loginout');
 let bookingbtn = document.querySelector('.bookingbtn');
 
-let urlapi = "/api/user";
+let urlapi = "/api/member";
 
 //切換登入；註冊
 function useronclick() {
@@ -64,7 +64,7 @@ form.addEventListener('submit', function(event) {
     if (username != "") {
         // console.log("註冊")
         data = {
-            "name": username,
+            "username": username,
             "email": useremail,
             "password": userpassword
         }
@@ -84,12 +84,13 @@ form.addEventListener('submit', function(event) {
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json',
+                "X-Requested-With": "XMLHttpRequest",
             }
         }).then(res => {
             return res.json();
         })
         .then(result => {
-            // console.log(result);
+            console.log(result);
             if (result.error) {
                 document.querySelector('.textpoint').textContent = result.message;
                 document.querySelector('.inputtextname').value = "";
@@ -132,7 +133,11 @@ function logout() {
     logbtn.onclick = userboxshow;
     logbtn.textContent = "登入 / 註冊";
     fetch(urlapi, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            "X-Requested-With": "XMLHttpRequest",
+        }
     }).then(function(res) {
         return res.json();
     }).then(function(result) {
@@ -148,14 +153,22 @@ function logout() {
 //檢查登入狀況
 function checklogstate() {
     fetch(urlapi, {
-        method: 'GET'
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "X-Requested-With": "XMLHttpRequest",
+        },
+        success: function(result) {
+            alert(result.Result);
+        }
     }).then(function(res) {
         return res.json();
     }).then(function(result) {
-        // console.log(result);
-
+        console.log(result);
         if (result.data != null) {
             logoin();
+        }else{
+            // logout();
         }
         if (document.querySelector('.welcometext')) {
             document.querySelector('.welcometext').textContent = "你好，" + result.data.name + "。";
