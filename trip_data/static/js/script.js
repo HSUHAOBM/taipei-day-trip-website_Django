@@ -19,9 +19,8 @@ function loadapi() {
     data = null;
     let src = "api/trip_data/page=" + String(page) + "/keyword=" + keyword;
     // let src = "api/trip_data/page=" + String(page);
-
     // let src='api/trip_data/page=3'
-    console.log(src)
+    // console.log(src)
     fetch(src, {
         method: "GET",
         headers: {
@@ -30,7 +29,7 @@ function loadapi() {
       }).then(function(response) {
         return response.json();
     }).then(function(result) {
-        console.log(result)
+        // console.log(result)
         if (result.error) {
             alert("無資料");
             page = 0;
@@ -40,7 +39,6 @@ function loadapi() {
             data = result;
             addbody();
             document.getElementById("loadgif").style.display = "none";
-
         }
     });
 }
