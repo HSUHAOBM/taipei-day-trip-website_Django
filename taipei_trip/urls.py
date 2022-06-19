@@ -24,3 +24,7 @@ urlpatterns = [
 urlpatterns +=[
     path('', include('trip_data.urls', namespace='trip_data')),
 ]
+
+urlpatterns +=[
+    path('', include('member.urls', namespace='member')),
+]
