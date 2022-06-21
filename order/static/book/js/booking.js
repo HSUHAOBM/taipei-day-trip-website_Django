@@ -1,27 +1,29 @@
 let oderprice = 0
-    //讀取訂單API
-function loadapi() {
-    // let src = "http://3.18.249.2:3000/api/attraction/"+Number(1)
-    let src = "/api/booking"
 
-    fetch(src, {
+// 讀取訂單API
+function loadapi() {
+    let url = "/api/order"
+    console.log(url)
+    fetch(url, {
+        method: "GET",
         headers: {
-            "test": "getapidata"
+            'Content-Type': 'application/json',
+            "X-Requested-With": "XMLHttpRequest",
         }
     }).then(function(response) {
         return response.json();
     }).then(function(result) {
-        data = result;
-        // console.log(data)
-
+        console.log(result)
         if (result.error) { goindex(); }
-
-        if (data.data == null) {
+        if (result.data == null) {
             notaipdata();
+            console.log('null')
 
         }
-        if (data.data != null) {
-            addbody();
+        if (result.data != null) {
+            console.log('notnull')
+
+            addbody(result);
             getaipdata();
         }
         getuserorder();
@@ -29,25 +31,25 @@ function loadapi() {
 }
 loadapi();
 //畫面
-function addbody() {
-    document.querySelector('.righttext1').textContent = "台北一日遊：" + data.data.attraction.name;
-    document.querySelector('.righttext2>div').textContent = data.data.date;
-    if (data.data.time == "morning") {
+function addbody(result) {
+    document.querySelector('.righttext1').textContent = "台北一日遊：" + result.data.order_trip.name;
+    document.querySelector('.righttext2>div').textContent = result.data.order_date;
+    if ( result.data.order_time == "morning") {
         document.querySelector('.righttext3>div').textContent = "早上 9 點到下午 4 點";
         document.querySelector('.righttext4>div').textContent = "新台幣 2000 元";
         document.querySelector('.mainfinsh>a').textContent = "總價：新台幣 2000 元";
         oderprice = 2000
     }
-    if (data.data.time == "afternoon") {
+    if ( result.data.order_time == "afternoon") {
         document.querySelector('.righttext3>div').textContent = "下午 2 點到下午 9 點";
         document.querySelector('.righttext4>div').textContent = "新台幣 2500 元";
         document.querySelector('.mainfinsh>a').textContent = "總價：新台幣 2500 元";
         oderprice = 2500
 
     }
-    document.querySelector('.righttext5>div').textContent = data.data.attraction.address;
-    document.querySelector('.leftimg>img').src = "http://" + data.data.attraction.images.split('http://')[1].split(',')[0];
-    document.querySelector('.leftimg>img').title = data.data.attraction.name;
+    document.querySelector('.righttext5>div').textContent =  result.data.order_trip.address;
+    document.querySelector('.leftimg>img').src = "http://" + result.data.order_trip.images.split('http://')[1].split(',')[0];
+    document.querySelector('.leftimg>img').title = result.data.order_trip.name;
 }
 //刪除訂單
 function clearapi() {

@@ -223,13 +223,13 @@ orderform.addEventListener('submit', function(event) {
         }
     }
 
-    let = urlbook = "/api/booking";
-    // console.log(formdata);
+    let = urlbook = "/api/order";
     fetch(urlbook, {
         method: "POST",
         body: JSON.stringify(formdata),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "X-Requested-With": "XMLHttpRequest",
         }
     }).then(function(res) {
         return res.json();
