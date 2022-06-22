@@ -223,7 +223,7 @@ orderform.addEventListener('submit', function(event) {
         }
     }
 
-    let = urlbook = "/api/order";
+    let = urlbook = "/api/book";
     fetch(urlbook, {
         method: "POST",
         body: JSON.stringify(formdata),

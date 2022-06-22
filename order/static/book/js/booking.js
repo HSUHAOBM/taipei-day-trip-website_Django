@@ -2,7 +2,7 @@ let oderprice = 0
 
 // 讀取訂單API
 function loadapi() {
-    let url = "/api/order"
+    let url = "/api/book"
     console.log(url)
     fetch(url, {
         method: "GET",
@@ -17,12 +17,8 @@ function loadapi() {
         if (result.error) { goindex(); }
         if (result.data == null) {
             notaipdata();
-            console.log('null')
-
         }
         if (result.data != null) {
-            console.log('notnull')
-
             addbody(result);
             getaipdata();
         }
@@ -53,9 +49,13 @@ function addbody(result) {
 }
 //刪除訂單
 function clearapi() {
-    let url = "/api/booking"
+    let url = "/api/book"
     fetch(url, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            "X-Requested-With": "XMLHttpRequest",
+        }
     }).then(function(response) {
         return response.json();
     }).then(function(result) {
@@ -108,7 +108,8 @@ function getaipdata() {
 
 
 function setfrontend() {
-    TPDirect.setupSDK(20409, 'app_KYrqKVHwBAtCqEdevKIrZCIfWbNgCUHCgOZwg5O8f3t3hKofm2nvlOOQF6Op', 'sandbox')
+    // TPDirect.setupSDK(20409, 'app_KYrqKVHwBAtCqEdevKIrZCIfWbNgCUHCgOZwg5O8f3t3hKofm2nvlOOQF6Op', 'sandbox')
+    TPDirect.setupSDK('124909', 'app_uXL5abTRd0ZfSeq0paS0B2Zrjt1CerP1OQFt3UHOj65wkFiUWiFaIBmJZacA', 'sandbox')
 
     TPDirect.card.setup({
         fields: {
@@ -203,7 +204,6 @@ function setfrontend() {
     let form = document.getElementById('formtappay');
 
     form.addEventListener('submit', function(event) {
-        // alert("hi ")
 
         // 取得 TapPay Fields 的 status
         const tappayStatus = TPDirect.card.getTappayFieldsStatus()
@@ -224,7 +224,8 @@ function setfrontend() {
                 alert('get prime error ' + result.msg)
                 return
             }
-            // alert('get prime 成功，prime: ' + result.card.prime)
+            console.log('result',result)
+            alert('get prime 成功，prime: ' + result.card.prime)
             bookinggotobackend(result.card.prime)
                 // send prime to your server, to pay with Pay by Prime API .
                 // Pay By Prime Docs: https://docs.tappaysdk.com/tutorial/zh/back.html#pay-by-prime-api
@@ -240,25 +241,19 @@ function bookinggotobackend(getprime) {
         "prime": getprime,
         "order": {
             "price": oderprice,
-            "trip": {
-                "attraction": data.data.attraction,
-                "date": data.data.date,
-                "time": data.data.time
-            },
             "contact": {
                 "name": document.querySelector('.maincenterinput1>input').value,
                 "email": document.querySelector('.maincenterinput2>input').value,
                 "phone": document.querySelector('.maincenterinput3>input').value
             }
-
         }
-
     }
-    fetch("/api/orders", {
+    fetch("/api/order", {
             method: "POST",
             body: JSON.stringify(bookingdata),
             headers: {
                 'Content-Type': 'application/json',
+                "X-Requested-With": "XMLHttpRequest",
             }
         }).then(res => {
             return res.json();
@@ -268,17 +263,6 @@ function bookinggotobackend(getprime) {
             if (result.data.payment.message == "已付款") {
                 // alert("成功付款")
                 gothankyou(result.data.number)
-
-                let url = "/api/booking"
-                fetch(url, {
-                    method: "DELETE"
-                }).then(function(response) {
-                    return response.json();
-                }).then(function(result) {
-                    data = result;
-                    // console.log(data)
-
-                });
             }
         });
 }
@@ -315,24 +299,15 @@ function getuserorder() {
                 let a_box3 = document.createElement("a")
                 a_box3.textContent = result[i].tripdate + "－";
                 a_box3.className = "a_box a1";
-
                 newdiv_box.appendChild(a_box3)
 
                 let a_box2 = document.createElement("a")
                 a_box2.textContent = result[i].tripname;
                 a_box2.className = "a_box a2";
-
                 newdiv_box.appendChild(a_box2)
-
-
-
                 // a_box1.href = '/thankyou?number=' + result[i].ordernumber
-
-
-
             }
         }
-
         document.getElementById("loadgif").style.display = "none";
         document.getElementById("loadgif2").style.display = "none";
     });

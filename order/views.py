@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from member.models import Member
+from order.models import Order
 from django.http import HttpResponseBadRequest, JsonResponse
 from trip_data.models import Trip_data
 
 import json
+from order.use_taypay import paybyprime
 
 # Create your views here.
 
@@ -12,7 +13,7 @@ def main(request):
     return render(request, 'booking.html')
 
 @csrf_exempt
-def order(request):
+def book(request):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
     # if request.is_ajax():
     if is_ajax:
@@ -24,8 +25,6 @@ def order(request):
 
         if request.method == 'GET':
             if user_name:
-                print('........')
-
                 order_data = request.session.get('order')
                 print(order_data)
                 if order_data:
@@ -66,50 +65,34 @@ def order(request):
                 return JsonResponse({"error" : True, 'message' : "未登入",})
 
 
-            # try:
-            #     member = Member.objects.get(user_email = email)
-            # except Member.DoesNotExist:
-            #     member = None
-            # if (member) :
-            #     return JsonResponse({'error' : True, 'message' : '已註冊'})
-            # else:
-            #     if not user_name.strip() or not email.strip() or not password.strip():
-            #         return JsonResponse ({"error": True, "message": "檢查輸入是否為空白!"})
-            #     elif (len(user_name) > 20 or len(email) < 6 or len(password) > 12 ):
-            #         return JsonResponse ({"error": True, "message": "輸入字元數不符合規定"})
-            #     else:
-            #         # hash
-            #         password = password + keyword
-            #         password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+@csrf_exempt
+def order(request):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    # if request.is_ajax():
+    if is_ajax:
+        try:
+            user_name = request.session.get('user_name')
+            user_email = request.session.get('user_email')
+        except:
+            pass
 
-            #         new_member = Member()
-            #         new_member.user_name = user_name
-            #         new_member.user_email = email
-            #         new_member.user_password = password
-            #         new_member.save()
-            #         request.session["user_name"] = user_name
-            #         request.session["user_email"] = email
+        if request.method == 'GET':
+            if user_name:
+                order_data = request.session.get('order')
+                print(order_data)
+                if order_data:
+                    return JsonResponse({'data': order_data,'mseeage' : '登入中'})
+            else :
+                return JsonResponse({"error" : True, 'message' : '錯誤',})
 
-                    # return JsonResponse ({"ok": True, "message": "註冊成功"})
-
-        if request.method == 'PATCH':
-            data = request.body.decode('utf-8')
-            data = json.loads(data)
-            email = data['email']
-            password = data['password']
-            try:
-                password = password + keyword
-                password = hashlib.sha256(password.encode('utf-8')).hexdigest()
-                member = Member.objects.get(user_email = email, user_password = password)
-                request.session["user_name"] = member.user_name
-                request.session["user_email"] = member.user_email
-                return JsonResponse ({"ok": True, "message": "登入成功"})
-
-            except Member.DoesNotExist:
-                return JsonResponse ({"error": True, "message": "信箱或密碼錯誤"})
-
-        if request.method == 'DELETE':
-            print(user_name,user_email)
-            request.session.clear()
-            return JsonResponse ({"ok": True, "message": "登出成功"})
-
+        if request.method == 'POST':
+            if user_name:
+                data = request.body.decode('utf-8')
+                data = json.loads(data)
+                print(data)
+                order_data = request.session.get('order')
+                tappaypay_prime = paybyprime(data)
+                if tappaypay_prime["status"] == 0:
+                    print(tappaypay_prime)
+                    print('訂單成立')
+                return JsonResponse ({"ok" : True, "message" : "資料送出成功"})
