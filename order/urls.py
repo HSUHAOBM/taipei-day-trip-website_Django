@@ -7,6 +7,8 @@ urlpatterns = [
     path('booking/', views.main),
     path('api/book', views.book),
     path('api/order', views.order),
+    path('thanks/number=<int:num>', views.thanks)
+
 ]
 
 

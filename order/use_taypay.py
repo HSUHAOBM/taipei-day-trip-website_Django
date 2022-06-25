@@ -7,14 +7,7 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 parent_dir = os.path.dirname(os.path.abspath(__file__))
 config.read(parent_dir + "/config.ini")
-
 partnerkey = config.get('tappay', 'partner_key')
-# print("partnerkey",partnerkey)
-# partnerkey = '111111111111'
-
-
-
-
 
 url="https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime"
 def paybyprime(data):
@@ -35,14 +28,10 @@ def paybyprime(data):
         "national_id": "A123456789"
         }
     }
-    print("paybyprimedata",paybyprimedata)
-
     my_headers = {
         "Content-Type": "application/json",
         "x-api-key": partnerkey
         }
 
     r = requests.post(url, headers = my_headers,json=paybyprimedata)
-    print(r.status_code)
-    print(r.json())
     return r.json()

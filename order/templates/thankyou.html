@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>台北一日遊</title>
-    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="/css/userbox.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="/css/thankyou_style.css" rel="stylesheet" type="text/css" media="all" />
-
-
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/userbox.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/thankyou_style.css' %}">
 </head>
 
 <body>
@@ -29,7 +27,7 @@
         <div class="main">
             <fieldset>
                 <legend class="order title"></legend>
-                <img id="loadgif" src="/gif/ajax-loader4.gif" />
+                <img id="loadgif" src="{% static '/gif/ajax-loader4.gif' %}" />
 
                 <div class="orderbox">
                     <div class="orderstr">
@@ -54,7 +52,7 @@
     </div>
     <div class="userbox">
         <div class="userboxtop"></div>
-        <div class="closebtn" onclick="userboxhide()"><img src="/img/closebtn.png" /></div>
+        <div class="closebtn" onclick="userboxhide()"><img src="{% static 'img/closebtn.png' %}" /></div>
 
         <a class="texttop">登入會員帳號</a>
         <form action="" method="post" id="signup">
@@ -70,10 +68,8 @@
     </div>
     </div>
 
-
-    <script src="/js/thankyou.js "></script>
-    <script src="/js/memberuser.js "></script>
-
+    <script src="{% static 'member/js/memberuser.js' %}"></script>
+    <script src="{% static '/book/js/thankyou.js' %}"></script>
 
 </body>
 

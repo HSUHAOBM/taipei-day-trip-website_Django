@@ -3,7 +3,6 @@ let oderprice = 0
 // 讀取訂單API
 function loadapi() {
     let url = "/api/book"
-    console.log(url)
     fetch(url, {
         method: "GET",
         headers: {
@@ -249,7 +248,7 @@ function bookinggotobackend(getprime) {
         }
     }
     fetch("/api/order", {
-            method: "POST",
+            method: "PATCH",
             body: JSON.stringify(bookingdata),
             headers: {
                 'Content-Type': 'application/json',
@@ -268,44 +267,49 @@ function bookinggotobackend(getprime) {
 }
 
 function gothankyou(ordernumber) {
-    location.href = '/thankyou?number=' + ordernumber
+    location.href = '/thanks/number=' + ordernumber
 }
 
 let orderbox = document.querySelector('.orderbox');
 
 function getuserorder() {
-    let src = "/api/getorder";
-    fetch(src).then(function(response) {
+    let src = "/api/order";
+    fetch(src, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            "X-Requested-With": "XMLHttpRequest",
+        }
+    }).then(function(response) {
         return response.json();
     }).then(function(result) {
-
+        console.log(result)
         if (result.error) {
             document.querySelector('.welcometext.a').style.display = "none";
         } else {
-            let jslength = 0;
-            for (let js2 in result) {
-                jslength++;
-            }
-            //畫畫面
-            for (let i = 1; i < jslength + 1; i++) {
-                // console.log(i)
+
+            //畫面
+            for (let i = 1; i < result.data.length; i++) {
                 let newdiv_box = document.createElement("div")
                 newdiv_box.className = "userorderbox";
                 orderbox.appendChild(newdiv_box)
 
                 newdiv_box.onclick = function() {
-                    location.href = '/thankyou?number=' + result[i].ordernumber
+                    location.href = '/thanks/number=' + result.data[i].order.id
                 };
+
+                date = result.data[i].order.trip_date.split('', 10)
+                date = date.toString().replace(/,/g,"")
+
                 let a_box3 = document.createElement("a")
-                a_box3.textContent = result[i].tripdate + "－";
+                a_box3.textContent = date + "－";
                 a_box3.className = "a_box a1";
                 newdiv_box.appendChild(a_box3)
 
                 let a_box2 = document.createElement("a")
-                a_box2.textContent = result[i].tripname;
+                a_box2.textContent = result.data[i].trip_data.stitle;
                 a_box2.className = "a_box a2";
                 newdiv_box.appendChild(a_box2)
-                // a_box1.href = '/thankyou?number=' + result[i].ordernumber
             }
         }
         document.getElementById("loadgif").style.display = "none";
