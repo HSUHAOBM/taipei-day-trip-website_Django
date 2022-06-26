@@ -164,7 +164,6 @@ function checklogstate() {
     }).then(function(res) {
         return res.json();
     }).then(function(result) {
-        console.log(result);
         if (result.data != null) {
             logoin();
         }else{

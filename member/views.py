@@ -70,6 +70,7 @@ def main(request):
                     new_member.save()
                     request.session["user_name"] = user_name
                     request.session["user_email"] = email
+                    request.session["user_id"] = new_member.id
 
                     return JsonResponse ({"ok": True, "message": "註冊成功"})
 
@@ -84,6 +85,7 @@ def main(request):
                 member = Member.objects.get(user_email = email, user_password = password)
                 request.session["user_name"] = member.user_name
                 request.session["user_email"] = member.user_email
+                request.session["user_id"] = member.id
                 return JsonResponse ({"ok": True, "message": "登入成功"})
 
             except Member.DoesNotExist:
