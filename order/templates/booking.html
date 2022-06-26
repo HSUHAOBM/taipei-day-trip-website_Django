@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
+{% load static %}
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/css/booking_style.css" rel="stylesheet" type="text/css" media="all" />
-    <link href="/css/userbox.css" rel="stylesheet" type="text/css" media="all" />
-
-
-    <title>Attraction</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/booking_style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/userbox.css' %}">
+    <title>Booking</title>
 </head>
 
 <body>
@@ -33,10 +32,10 @@
                 <a class="welcometext">你好，來賓！</a>
                 <a class="welcometext a">已預定行程如下：</a>
                 <div class="orderbox"></div>
-                <img id="loadgif" src="/gif/ajax-loader4.gif" />
+                <img id="loadgif" src="{% static '/gif/ajax-loader4.gif' %}" />
 
                 <a class="welcometext b">待預定的行程如下：</a>
-                <img id="loadgif2" src="/gif/ajax-loader4.gif" />
+                <img id="loadgif2" src="{% static '/gif/ajax-loader4.gif' %}" />
 
                 <a class="infortext" hidden>目前沒有任何待預訂的行程</a>
 
@@ -46,7 +45,7 @@
                             <img src="" title="123"></div>
                     </div>
                     <div class="righttext ">
-                        <div class="clearbtn " onclick="clearapi()"><img src="/img/clear.png " title="刪除行程 " /></div>
+                        <div class="clearbtn " onclick="clearapi()"><img src="{% static '/img/clear.png' %}" title="刪除行程 " /></div>
                         <div class="righttext1 "></div>
                         <div class="righttext2 ">
                             <a>日期：</a>
@@ -118,7 +117,7 @@
     </div>
     <div class="userbox">
         <div class="userboxtop"></div>
-        <div class="closebtn" onclick="userboxhide()"><img src="/img/closebtn.png" /></div>
+        <div class="closebtn" onclick="userboxhide()"><img src="{% static 'img/closebtn.png' %}" /></div>
 
         <a class="texttop">登入會員帳號</a>
         <form action="" method="post" id="signup">
@@ -134,10 +133,10 @@
     </div>
     </div>
 
-    <script src="/js/memberuser.js "></script>
-    <script src="https://js.tappaysdk.com/tpdirect/v5.7.0 "></script>
-    <script src="/js/booking.js "></script>
-    <script src="{% static 'booking/js/attractionscript.js' %}"></script>
+    <script src="{% static 'member/js/memberuser.js' %}"></script>
+    <script src="https://js.tappaysdk.com/tpdirect/v5.8.0 "></script>
+    <script src="{% static '/book/js/booking.js' %}"></script>
+    <!-- <script src="{% static 'js/attractionscript.js' %}"></script> -->
 
 
 </body>
