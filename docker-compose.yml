@@ -1,0 +1,28 @@
+version: '3.5'
+services:
+    web:
+      build: .
+      # entrypoint: /app/docker-entrypoint.sh
+      command: python manage.py runserver 0.0.0.0:8000
+      restart: always
+
+      # ref.
+      # https://docs.djangoproject.com/en/3.0/ref/django-admin/#django-admin-createsuperuser
+      environment:
+        - DJANGO_SUPERUSER_USERNAME=admin
+        - DJANGO_SUPERUSER_PASSWORD=admin
+        - DJANGO_SUPERUSER_EMAIL=admin@gmaul.com
+
+      volumes:
+        - api_data:/app
+        # (HOST:CONTAINER)
+      ports:
+        - "8000:8000"
+        # (HOST:CONTAINER)
+      logging:
+        driver: "json-file"
+        options:
+          max-file: "1"    # default 是 1
+          max-size: "200m" # default 是 -1, 也就是沒有限制
+volumes:
+    api_data:
