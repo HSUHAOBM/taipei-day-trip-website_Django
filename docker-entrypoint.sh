@@ -11,5 +11,3 @@ python json_data_load.py
 pwd
 
 
-
-
