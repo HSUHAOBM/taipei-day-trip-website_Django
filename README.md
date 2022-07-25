@@ -27,6 +27,20 @@
 
 ## 前置作業 ##
 
-Clone
+1. git clone
 
-` docker-compose up `
+2. 
+    
+    vi config.ini 
+
+```
+[hash]
+key = TOKEN123
+
+[tappay]
+partner_key = partner_g7Z2Z6I8jgFWP4lrKSFsl0ThbcMXTDQzcuMMnIs2SBddsPixURXq59Ks
+```
+
+3. 
+    
+     docker-compose up 
