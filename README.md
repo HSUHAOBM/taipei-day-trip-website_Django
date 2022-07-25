@@ -44,3 +44,11 @@ partner_key = partner_g7Z2Z6I8jgFWP4lrKSFsl0ThbcMXTDQzcuMMnIs2SBddsPixURXq59Ks
 3. 
     
      docker-compose up 
+
+
+
+## 網頁
+
+![1628534240622](https://user-images.githubusercontent.com/73993570/128756928-bae8f84e-a897-496e-8bd2-a988b2eba1ee.jpg)
+![1628534225516](https://user-images.githubusercontent.com/73993570/128756913-8f384474-27cf-40a6-9014-c615a562ce61.jpg)
+
