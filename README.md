@@ -27,14 +27,20 @@
 
 ## 前置作業 ##
 
-Clone
+1. git clone
 
-` docker-compose up `
+2. 
+    
+    vi config.ini 
 
-進入容器
+```
+[hash]
+key = TOKEN123
 
-` docker exec -it xxxx bash`
+[tappay]
+partner_key = partner_g7Z2Z6I8jgFWP4lrKSFsl0ThbcMXTDQzcuMMnIs2SBddsPixURXq59Ks
+```
 
-` sh docker-entrypoint.sh `
-
-
+3. 
+    
+     docker-compose up 
