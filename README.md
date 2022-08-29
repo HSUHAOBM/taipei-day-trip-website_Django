@@ -2,6 +2,7 @@
 ## 從台北市政府獲取及呈現旅遊的景點信息，並提供會員訂購導覽服務、支付、查詢等服務
 
 
+## 網站連結：https://triptaipei.haogooday.fun/
 
 #### 測試帳號/密碼： test@test.com /123456
 #### TapPay付款測試：
